@@ -1,0 +1,39 @@
+<div class="profile-container">
+  @if (isLoading()) {
+    <div class="loading">Завантаження даних профілю з GitHub...</div>
+  } @else {
+
+    @if (profileData()) {
+      <div class="profile-card">
+        <img [src]="profileData().avatar_url" alt="Аватар користувача" class="avatar">
+        <h2>{{ profileData().name }}</h2>
+        <p class="bio">{{ profileData().bio || 'Біографія відсутня' }}</p>
+        <div class="stats">
+          <span>📁 Репозиторії: {{ profileData().public_repos }}</span>
+          <span>👥 Фоловери: {{ profileData().followers }}</span>
+        </div>
+        <a [href]="profileData().html_url" target="_blank" class="btn-github">Відкрити GitHub</a>
+      </div>
+    }
+
+    <div class="repos-section">
+      <h3>Останні оновлені репозиторії</h3>
+      <div class="repos-grid">
+        @for (repo of repositories(); track repo.id) {
+          <div class="repo-card">
+            <h4><a [href]="repo.html_url" target="_blank">{{ repo.name }}</a></h4>
+            <p>{{ repo.description || 'Опис репозиторію відсутній.' }}</p>
+            <div class="repo-meta">
+              <span>⭐ {{ repo.stargazers_count }}</span>
+              <span>🍴 {{ repo.forks_count }}</span>
+              @if (repo.language) {
+                <span class="lang">{{ repo.language }}</span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+  }
+</div>
