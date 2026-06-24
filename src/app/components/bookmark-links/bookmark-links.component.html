@@ -1,0 +1,39 @@
+<div class="settings-container">
+  <h2>Налаштування робочого простору</h2>
+
+  <div class="settings-grid">
+    <div class="settings-card">
+      <h3>Профіль розробника</h3>
+
+      <div class="form-group">
+        <label for="githubInput">Нікнейм на GitHub:</label>
+        <input type="text"
+               id="githubInput"
+               [ngModel]="inputUsername()"
+               (ngModelChange)="inputUsername.set($event)"
+               class="form-control"
+               placeholder="Введіть нікнейм...">
+      </div>
+
+      <div class="form-group">
+        <label for="roleInput">Поточна роль / Спеціалізація:</label>
+        <input type="text"
+               id="roleInput"
+               [ngModel]="currentRole()"
+               (ngModelChange)="currentRole.set($event)"
+               class="form-control"
+               placeholder="Наприклад: .NET & Angular Developer">
+      </div>
+
+      <button (click)="saveSettings()" class="btn-save">Зберегти зміни</button>
+    </div>
+
+    <div class="preview-sidebar">
+      <app-user-preview
+        [githubUsername]="inputUsername()"
+        [devRole]="currentRole()"
+        (onReset)="resetUsername()">
+      </app-user-preview>
+    </div>
+  </div>
+</div>
