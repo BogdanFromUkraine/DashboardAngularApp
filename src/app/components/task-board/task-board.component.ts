@@ -2,12 +2,13 @@ import { Component, OnInit, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // 👈 Потрібен для роботи з формами (двостороннє зв'язування)
 import {Task} from '../../models/task.model';
+import {HighlightStatusDirective} from '../../directives/highlight-status.directive';
 
 
 @Component({
   selector: 'app-task-board',
   standalone: true,
-  imports: [CommonModule, FormsModule], // 👈 Обов'язково імпортуємо FormsModule
+  imports: [CommonModule, FormsModule, HighlightStatusDirective], // 👈 Обов'язково імпортуємо FormsModule
   templateUrl: './task-board.component.html',
   styleUrl: './task-board.component.css'
 })

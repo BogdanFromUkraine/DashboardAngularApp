@@ -18,7 +18,7 @@
       <div class="column-body">
         @for (task of tasks(); track task.id) {
           @if (task.status === 'todo') {
-            <div class="task-card">
+            <div [appHighlightStatus]="task.status" class="task-card">
               <h4>{{ task.title }}</h4>
               <p>{{ task.description }}</p>
               <div class="card-actions">
@@ -36,7 +36,7 @@
       <div class="column-body">
         @for (task of tasks(); track task.id) {
           @if (task.status === 'in-progress') {
-            <div class="task-card">
+            <div [appHighlightStatus]="task.status" class="task-card">
               <h4>{{ task.title }}</h4>
               <p>{{ task.description }}</p>
               <div class="card-actions">
@@ -54,7 +54,7 @@
       <div class="column-body">
         @for (task of tasks(); track task.id) {
           @if (task.status === 'done') {
-            <div class="task-card">
+            <div [appHighlightStatus]="task.status" class="task-card">
               <h4>{{ task.title }}</h4>
               <p>{{ task.description }}</p>
               <div class="card-actions">
