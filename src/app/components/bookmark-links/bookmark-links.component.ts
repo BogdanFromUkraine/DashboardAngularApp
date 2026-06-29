@@ -23,6 +23,10 @@ export class BookmarkLinksComponent {
     if (!this.inputUsername().trim()) return;
 
     this.githubService.username.set(this.inputUsername());
+
+    //зберігаю userName у localStorage
+    localStorage.setItem('github_username', this.inputUsername());
+
     alert('Налаштування успішно збережено!');
   }
 
