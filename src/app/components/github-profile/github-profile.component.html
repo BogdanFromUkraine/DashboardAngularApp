@@ -5,18 +5,52 @@
 
     @if (profileData()) {
       <div class="profile-card">
-        <img [src]="profileData().avatar_url" alt="Аватар користувача" class="avatar">
+        <img [src]="profileData().avatarUrl" alt="Аватар користувача" class="avatar">
         <h2>{{ profileData().name }}</h2>
-        <p class="bio">{{ profileData().bio || 'Біографія відсутня' }}</p>
+        <p class="bio">{{ profileData().bio }}</p>
         <div class="stats">
-          <span>📁 Репозиторії: {{ profileData().public_repos }}</span>
+          <span>📁 Репозиторії: {{ profileData().publicRepos }}</span>
           <span>👥 Фоловери: {{ profileData().followers }}</span>
         </div>
         <a [href]="profileData().html_url" target="_blank" class="btn-github">Відкрити GitHub</a>
       </div>
     }
 
-    <div class="repos-section">
+    <div class="search-section">
+      <h3>🔍 Швидкий пошук репозиторіїв</h3>
+
+      <input
+        type="text"
+        #searchInput
+        (input)="onSearchChange(searchInput.value)"
+        placeholder="Введіть назву проєкту (наприклад: angular, dot-net)..."
+        class="search-input"
+      />
+
+      @if (isSearching()) {
+        <p class="searching-text">🔄 Шукаю на GitHub...</p>
+      }
+
+      <ul class="repos-list">
+        @for (repo of searchResults(); track repo.id) {
+          <li class="repo-item">
+            <div class="repo-info">
+              <a [href]="repo.html_url" target="_blank" class="repo-name">{{ repo.name }}</a>
+              <p class="repo-desc">{{ repo.description || 'Опис відсутній' }}</p>
+            </div>
+            <div class="repo-stars">
+              ⭐ {{ repo.stargazers_count }}
+            </div>
+          </li>
+        } @empty {
+          @if (searchInput.value) {
+            <p class="no-results">Нічого не знайдено за цим запитом 😢</p>
+          }
+        }
+      </ul>
+    </div>
+
+    <hr class="section-divider" /> <div class="repos-section">
       <h3>Останні оновлені репозиторії</h3>
       <div class="repos-grid">
         @for (repo of repositories(); track repo.id) {
