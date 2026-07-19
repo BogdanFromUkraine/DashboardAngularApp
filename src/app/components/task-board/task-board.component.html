@@ -1,0 +1,89 @@
+<div class="board-container">
+
+  <div class="task-form">
+    <h3>Нове завдання</h3>
+    <div class="form-group">
+      <input type="text" [(ngModel)]="newTitle" placeholder="Назва завдання..." class="form-control">
+    </div>
+    <div class="form-group">
+      <textarea [(ngModel)]="newDescription" placeholder="Опис завдання..." class="form-control"></textarea>
+    </div>
+    <button (click)="addTask()" class="btn-add">Додати таску</button>
+  </div>
+
+  <!-- 1. Зв'язуємо всі три колонки разом за допомогою cdkDropListGroup -->
+  <div class="kanban-board" cdkDropListGroup>
+
+    <!-- КОЛОНКА 1: ТРЕБА ЗРОБИТИ -->
+    <div class="board-column">
+      <div class="column-header todo">Треба зробити</div>
+      <div class="column-body"
+           id="todo"
+           cdkDropList
+           [cdkDropListData]="tasks()"
+           (cdkDropListDropped)="drop($event)">
+
+        @for (task of tasks(); track task.id) {
+          @if (task.status === 'todo') {
+            <!-- 3. Робимо саму картку рухомою (cdkDrag) та прив'язуємо її об'єкт через [cdkDragData] -->
+            <div [appHighlightStatus]="task.status" class="task-card" cdkDrag [cdkDragData]="task">
+              <h4>{{ task.title }}</h4>
+              <p>{{ task.description }}</p>
+              <div class="card-actions">
+                <!-- Кнопку перенесення видалено — тепер тут рулить мишка -->
+                <button (click)="deleteTask(task.id)" class="btn-delete">🗑️</button>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </div>
+
+    <!-- КОЛОНКА 2: У ПРОЦЕСІ -->
+    <div class="board-column">
+      <div class="column-header in-progress">У процесі</div>
+      <div class="column-body"
+           id="in-progress"
+           cdkDropList
+           [cdkDropListData]="tasks()"
+           (cdkDropListDropped)="drop($event)">
+
+        @for (task of tasks(); track task.id) {
+          @if (task.status === 'in-progress') {
+            <div [appHighlightStatus]="task.status" class="task-card" cdkDrag [cdkDragData]="task">
+              <h4>{{ task.title }}</h4>
+              <p>{{ task.description }}</p>
+              <div class="card-actions">
+                <button (click)="deleteTask(task.id)" class="btn-delete">🗑️</button>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </div>
+
+    <!-- КОЛОНКА 3: ЗРОБЛЕНО -->
+    <div class="board-column">
+      <div class="column-header done">Зроблено</div>
+      <div class="column-body"
+           id="done"
+           cdkDropList
+           [cdkDropListData]="tasks()"
+           (cdkDropListDropped)="drop($event)">
+
+        @for (task of tasks(); track task.id) {
+          @if (task.status === 'done') {
+            <div [appHighlightStatus]="task.status" class="task-card" cdkDrag [cdkDragData]="task">
+              <h4>{{ task.title }}</h4>
+              <p>{{ task.description }}</p>
+              <div class="card-actions">
+                <button (click)="deleteTask(task.id)" class="btn-delete full-width">Видалити з дошки</button>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </div>
+
+  </div>
+</div>

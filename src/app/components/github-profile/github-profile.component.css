@@ -1,0 +1,134 @@
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.loading {
+  text-align: center;
+  font-size: 18px;
+  color: #a6adc8;
+  padding: 50px 0;
+}
+
+/* Стилі для картки профілю */
+.profile-card {
+  background-color: #252538;
+  border: 1px solid #45475a;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #b4befe;
+  margin-bottom: 15px;
+}
+
+.profile-card h2 {
+  margin: 10px 0 5px 0;
+  color: #cdd6f4;
+}
+
+.bio {
+  color: #a6adc8;
+  font-style: italic;
+  margin-bottom: 20px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.btn-github {
+  background-color: #b4befe;
+  color: #11111b;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  display: inline-block;
+  transition: background-color 0.2s;
+}
+
+.btn-github:hover {
+  background-color: #cba6f7;
+}
+
+/* Стилі для сітки репозиторіїв */
+.repos-section h3 {
+  color: #cdd6f4;
+  border-bottom: 1px solid #45475a;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.repos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.repo-card {
+  background-color: #252538;
+  border: 1px solid #45475a;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s;
+}
+
+.repo-card:hover {
+  transform: translateY(-2px);
+  border-color: #b4befe;
+}
+
+.repo-card h4 {
+  margin: 0 0 10px 0;
+}
+
+.repo-card h4 a {
+  color: #b4befe;
+  text-decoration: none;
+}
+
+.repo-card h4 a:hover {
+  text-decoration: underline;
+}
+
+.repo-card p {
+  color: #a6adc8;
+  font-size: 14px;
+  margin: 0 0 20px 0;
+  flex-grow: 1;
+}
+
+.repo-meta {
+  display: flex;
+  gap: 15px;
+  font-size: 13px;
+  color: #bac2de;
+}
+
+.lang {
+  margin-left: auto;
+  background-color: #45475a;
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: #cdd6f4;
+}
