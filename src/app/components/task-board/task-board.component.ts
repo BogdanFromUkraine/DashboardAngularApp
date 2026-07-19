@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // 👈 Потрібен для роботи з формами (двостороннє зв'язування)
 import {Task} from '../../models/task.model';
 import {HighlightStatusDirective} from '../../directives/highlight-status.directive';
+import { DragDropModule, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 
 @Component({
   selector: 'app-task-board',
   standalone: true,
-  imports: [CommonModule, FormsModule, HighlightStatusDirective], // 👈 Обов'язково імпортуємо FormsModule
+  imports: [CommonModule, FormsModule, HighlightStatusDirective, DragDropModule], // 👈 Обов'язково імпортуємо FormsModule
   templateUrl: './task-board.component.html',
   styleUrl: './task-board.component.css'
 })
@@ -66,5 +67,30 @@ export class TaskBoardComponent implements OnInit {
   // 7. Метод для видалення завдання
   deleteTask(taskId: string): void {
     this.tasks.update(oldTasks => oldTasks.filter(t => t.id !== taskId));
+  }
+
+  // Метод, який спрацьовує, коли користувач відпускає перетягнуту таску
+  drop(event: CdkDragDrop<Task[]>): void {
+    // Якщо картку кинули в ту саму колонку, де вона й була
+    if (event.previousContainer === event.container) {
+      // Angular CDK має вбудовану утиліту для зміни індексів в масиві
+      // Але оскільки у нас СИГНАЛ, нам треба оновити його через .update()
+      this.tasks.update(oldTasks => {
+        const updated = [...oldTasks];
+        // Ця функція з CDK міняє елементи місцями всередині масиву
+        moveItemInArray(updated, event.previousIndex, event.currentIndex);
+        return updated;
+      });
+    } else {
+      // Якщо картку перетягнули в ІНШУ колонку
+      const draggedTask = event.item.data as Task;
+      // Визначаємо, в яку колонку (з яким статусом) її кинули
+      const targetStatus = event.container.id as 'todo' | 'in-progress' | 'done';
+
+      // Оновлюємо статус таски в нашому сигналі
+      this.tasks.update(oldTasks =>
+        oldTasks.map(t => t.id === draggedTask.id ? { ...t, status: targetStatus } : t)
+      );
+    }
   }
 }
